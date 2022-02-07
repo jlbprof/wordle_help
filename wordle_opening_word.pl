@@ -3,6 +3,8 @@
 use strict;
 use warnings;
 
+package wordle::opening_word;
+
 use Carp;
 use Getopt::Long;
 
@@ -42,7 +44,7 @@ $SIG{INT} = sub {
 sub usage_help
 {
 	print "usage: wordle_opening_word.pl [ranking_rule]\n";
-    print "   clues: CA1 - Contains an A and rank that as 1\n";
+    print "    rank: CA1 - Contains an A and rank that as 1\n";
     print "          D   - no duplicates\n";
     print "   Positions are 1 based\n";
 
@@ -59,7 +61,7 @@ sub usage
 	exit 0;
 }
 
-sub validate_clue
+sub validate_rank
 {
     my ($clue) = @_;
 
@@ -78,8 +80,24 @@ sub validate_clue
 }
 
 my %words;
+my @ranks;
+my @words;
 
-sub apply_clue
+sub set_words
+{
+    (@words) = @_;
+    %words = ();
+
+    return;
+}
+
+sub set_ranks
+{
+    (@ranks) = @_;
+    return;
+}
+
+sub apply_rank
 {
     my ($clue) = @_;
 
@@ -115,30 +133,69 @@ sub apply_clue
     }
 }
 
+sub process_ranks
+{
+    foreach my $word (@words) {
+        $words{$word} = 0;
+    }
+
+    foreach my $rank (@ranks) {
+        apply_rank ($rank);
+    }
+
+    my @list;
+    foreach my $word (keys %words) {
+        my $str = sprintf ("%03d%s", $words{$word}, $word); 
+        push (@list, $str);
+    }
+    my @sorted_list = reverse sort @list;
+
+    my $i = 0;
+    my $top_rank = int(substr ($sorted_list [$i], 0, 3));
+
+    while (1) {
+        my $str = $sorted_list[$i];
+        my $rank = substr($str, 0, 3);
+        my $word = substr($str, 3);
+
+        last if (int($rank) < $top_rank);
+
+        printf ("%4d %5s %3d\n", $i + 1, $word, $rank);
+        $i ++;
+    }
+
+    print "Total $i\n";
+
+    return;
+}
+
 sub script
 {
-	my (@clues) = @_;
+	my (@args) = @_;
 
     my $show;
 
-    my @xclues = @clues;
-    @clues = ();
+    set_ranks ();
+
+    my @xclues = @args;
+    @ranks = ();
     foreach my $clue (@xclues) {
         if ($clue eq "--help") {
             usage_help ();
             exit 0;
         }
-        validate_clue ($clue);
-        push (@clues, $clue);
+        validate_rank ($clue);
+        push (@ranks, $clue);
     }
 
+    set_words ();
+
     my $word_file = 'words_alpha_5_letters.txt';
-    my @words;
 
     usage_help ();
     print "\n";
 
-    exit 0 if (!@clues);
+    exit 0 if (!@ranks);
 
     if (open my $fh, "<", $word_file) {
         while (<$fh>) {
@@ -156,8 +213,8 @@ sub script
         $words{$word} = 0;
     }
 
-    foreach my $clue (@clues) {
-        apply_clue ($clue);
+    foreach my $rank (@ranks) {
+        apply_rank ($rank);
     }
 
     my @list;
