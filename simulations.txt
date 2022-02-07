@@ -1,0 +1,7 @@
+./wordle_simulate.pl PLEAT GREAT CHEAT SWEAT PLEAT
+
+./wordle_simulate.pl ALOFT GREAT SMART ABOUT ADOPT ALOFT
+
+./wordle_simulate.pl SKILL GREAT BLIND SPILL SKILL
+
+./wordle_simulate.pl ELDER TEARS BOXER DRIER UNDER CIDER ELDER

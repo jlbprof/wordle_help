@@ -57,48 +57,72 @@ sub script
 {
 	my (@args) = @_;
 
-	my $solution = $args [0];
-    my $first_guess = $args [1];
+    my $solution = splice @args, 0, 1;
 
     usage ("Please provide a solution") if !$solution;
     usage ("Solution must be 5 characters") if length ($solution) != 5;
-    usage ("Please provide a first guess") if !$first_guess;
-    usage ("First guess must be 5 characters") if length ($first_guess) != 5;
-
-    usage ("Congratulations you win") if ($solution eq $first_guess);
-
-    my @solution = split(//, $solution);
-    my @first_guess = split(//, $first_guess);
+    usage ("Please provide at least one guess") if @args < 1;
 
     my @clues;
+    my @new_clues;
 
-    for my $i (1 .. 5) {
-        my $char_first    = $first_guess [$i - 1];
-        my $char_solution = $solution [$i - 1];
+    my @solution = split //, $solution;
 
-        if ($char_first eq $char_solution) {
-            push @clues, "A$char_first$i";
-            next;
+    print "SOLUTION  $solution\n";
+
+    foreach my $guess (@args) {
+        usage ("Guess must be 5 characters ($guess)") if length ($guess) != 5;
+
+        if ($guess eq $solution) {
+            print "WIN\n";
+            last;
         }
 
-        if ($solution =~ m/$char_first/) {
-            push @clues, "N$char_first$i";
-            next;
+        print "-"x75 . "\n";
+        print "GUESS     $guess\n";
+
+        @new_clues = ();
+        my @guess = split //, $guess;
+
+        for my $i (1 .. 5) {
+            my $char_first    = $guess [$i - 1];
+            my $char_solution = $solution [$i - 1];
+
+            if ($char_first eq $char_solution) {
+                push @new_clues, "A$char_first$i";
+                next;
+            }
+
+            if ($solution =~ m/$char_first/) {
+                push @new_clues, "N$char_first$i";
+                next;
+            }
+            else {
+                push @new_clues, "X$char_first";
+                next;
+            }
         }
-        else {
-            push @clues, "X$char_first";
-            next;
+
+        my $clues = join (' ', @new_clues);
+        print "NEW CLUES $clues\n";
+
+        push (@clues, @new_clues);
+        $clues = join (' ', @clues);
+
+        print "CLUES     $clues\n";
+
+        my @results = wordle::help::get_possible_solutions (@clues);
+        my $num_words = @results;
+        print "NUM WORDS $num_words\n";
+
+        print "WORDS (20) ";
+        for my $i (1 .. 20)
+        {
+            last if ($i > @results);
+            print $results [$i-1] . " ";
         }
+        print "\n";
     }
-
-    print "Clues\n";
-    foreach my $clue (@clues) {
-        print $clue . "\n";
-    }
-
-    my @results = wordle::help::get_possible_solutions (@clues);
-
-    print "Num possible solutions after first guess :" . @results . ":\n";
 
 	return 1;
 }
