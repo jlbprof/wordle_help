@@ -81,6 +81,101 @@ sub validate_clue
     return;
 }
 
+sub look_for_conflicting_clues
+{
+    my (@clues) = @_;
+
+    my %lookup;
+
+    for my $clue (@clues) {
+        my ($clue_type, $char, $pos) = split //, $clue;
+        if (!exists $lookup{$char}) {
+            $lookup{$char} = { $clue_type => [ $clue ] };
+        }
+        else {
+            if (exists $lookup{$char}->{$clue_type})
+            {
+                push (@{ $lookup{$char}->{$clue_type} }, $clue);
+            }
+            else
+            {
+                $lookup{$char}->{$clue_type} = [ $clue ];
+            }
+        }
+    }
+
+    # Check for X and A or N first
+
+    for my $char (keys %lookup)
+    {
+        my @keys = keys %{ $lookup{$char} };
+        next if @keys == 1;
+
+        if (exists $lookup{$char}->{X} && (exists $lookup{$char}->{A} || $lookup{$char}->{N})) {
+            my $clues = "";
+            foreach my $clue_type (keys %{ $lookup{$char} })
+            {
+                $clues .= " " if ($clues ne "");
+                $clues = $clues . join (' ', @{ $lookup{$char}->{$clue_type} });
+            }
+
+            die "Conflicting clues :$clues:";
+        }
+    }
+
+    # Check to see if N and A mention the same position
+
+    for my $char (keys %lookup)
+    {
+        my @keys = keys %{ $lookup{$char} };
+        next if @keys == 1;
+
+        my %n_lookup;
+        my %a_lookup;
+
+        next if (!exists $lookup{$char}->{A});
+        next if (!exists $lookup{$char}->{N}); # both have to be present to conflict
+
+        foreach my $clue (@{ $lookup{$char}->{A} }) {
+            my ($clue_type, $char, $pos) = split //, $clue;
+            $a_lookup{$pos} = 1;
+        }
+
+        foreach my $clue (@{ $lookup{$char}->{N} }) {
+            my ($clue_type, $char, $pos) = split //, $clue;
+            $n_lookup{$pos} = 1;
+        }
+
+        foreach my $pos (keys %n_lookup) {
+            if (exists $a_lookup{$pos}) {
+                my $clues = "";
+                foreach my $clue_type (keys %{ $lookup{$char} })
+                {
+                    $clues .= " " if ($clues ne "");
+                    $clues = $clues . join (' ', @{ $lookup{$char}->{$clue_type} });
+                }
+
+                die "Conflicting clues :$clues:";
+            }
+        }
+
+        foreach my $pos (keys %a_lookup) {
+            if (exists $n_lookup{$pos}) {
+                my $clues = "";
+                foreach my $clue_type (keys %{ $lookup{$char} })
+                {
+                    $clues .= " " if ($clues ne "");
+                    $clues = $clues . join (' ', @{ $lookup{$char}->{$clue_type} });
+                }
+
+                die "Conflicting clues :$clues:";
+            }
+        }
+    }
+
+    return;
+}
+
 sub apply_clue
 {
     my ($clue, @words) = @_;
@@ -122,11 +217,6 @@ sub get_possible_solutions
     my $word_file = 'words_alpha_5_letters.txt';
     my @words;
 
-    usage_help ();
-    print "\n";
-
-    exit 0 if (!@clues);
-
     if (open my $fh, "<", $word_file) {
         while (<$fh>) {
             my $word = $_;
@@ -167,6 +257,8 @@ sub script
         validate_clue ($clue);
         push (@clues, $clue);
     }
+
+    look_for_conflicting_clues (@clues);
 
     my $word_file = 'words_alpha_5_letters.txt';
     my @words;

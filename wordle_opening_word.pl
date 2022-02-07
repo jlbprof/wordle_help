@@ -171,12 +171,18 @@ sub script
     }
     my @sorted_list = reverse sort @list;
 
-    for my $i (1 .. 25) {
+    my $i = 0;
+    my $top_rank = int(substr ($sorted_list [$i], 0, 3));
+
+    while (1) {
         my $str = $sorted_list[$i];
         my $rank = substr($str, 0, 3);
         my $word = substr($str, 3);
 
-        printf ("%5s %3d\n", $word, $rank);
+        last if (int($rank) < $top_rank);
+
+        printf ("%4d %5s %3d\n", $i + 1, $word, $rank);
+        $i ++;
     }
 
 	return 1;
