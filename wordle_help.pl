@@ -181,13 +181,8 @@ sub apply_clue
     my ($clue, @words) = @_;
     my @output;
 
-    my $clue_type = substr ($clue, 0, 1);
+    my ($clue_type, $char, $pos) = split //, $clue;
 
-    my $char = substr ($clue, 1, 1);
-    my $pos;
-
-    $pos = substr ($clue, 2, 1) if ($clue_type eq "A" || $clue_type eq "N");
-   
     foreach my $word (@words)
     {
         if ($clue_type eq "A")

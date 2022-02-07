@@ -83,11 +83,7 @@ sub apply_clue
 {
     my ($clue) = @_;
 
-    my $clue_type = substr ($clue, 0, 1);
-
-    my $char = substr ($clue, 1, 1);
-
-    my $rank = substr ($clue, 2, 1) if ($clue_type eq "C");
+    my ($clue_type, $char, $rank) = split //, $clue;
 
     my $total_rank = 0;
 
