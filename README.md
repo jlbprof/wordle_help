@@ -30,18 +30,19 @@ I have settled on the first guess as always being AISLE because of all the
 vowels and S and L.  I found this word by using this script.
 
 ./wordle_opening_word.pl CA2 CE2 CI2 CO2 CU1 CS1 CT1 CR1 CL1
+
 Where:
 
-CA2
-CE2
-CI2
-CO2 - Look for A, E, I and O and if you see them add to the words rank 2.
+- CA2
+- CE2
+- CI2
+- CO2 - Look for A, E, I and O and if you see them add to the words rank 2.
 
-CU1
-CS1
-CT1
-CR1
-CL1 - Look for U, S, T, R and L and if you see them add to the words rank 1.
+- CU1
+- CS1
+- CT1
+- CR1
+- CL1 - Look for U, S, T, R and L and if you see them add to the words rank 1.
 
 This returns 67 words of which AISLE I like best.
 
@@ -49,11 +50,11 @@ So I guess AISLE
 
 I get the following clues:
 
-XI   - 'I' is not present.
-XL   - 'L' is not present.
-NA1  - 'A' is present but not at position 1.
-NS3  - 'S' is present but not at position 3.
-AE5  - 'E' is present and at position 5.
+- XI   - 'I' is not present.
+- XL   - 'L' is not present.
+- NA1  - 'A' is present but not at position 1.
+- NS3  - 'S' is present but not at position 3.
+- AE5  - 'E' is present and at position 5.
 
 I then run my 2nd guess program.
 
