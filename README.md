@@ -50,6 +50,8 @@ I then run my 2nd guess program.
 
 ./wordle_best_from.pl XI XL NA1 NS3 AE5 XXX CA2 CE2 CI2 CO2 CU1 CS1 CT1 CR1 CL1
 
+NOTE: XXX seperates the clues from the guess, to the word ranking rules.
+
 This takes my clues and then out of the choices produced, ranks them by the same
 rules as my first guess program.
 
