@@ -73,13 +73,13 @@ sub script
     foreach my $guess (@args) {
         usage ("Guess must be 5 characters ($guess)") if length ($guess) != 5;
 
+        print "-"x75 . "\n";
+        print "GUESS     $guess\n";
+
         if ($guess eq $solution) {
             print "WIN\n";
             last;
         }
-
-        print "-"x75 . "\n";
-        print "GUESS     $guess\n";
 
         @new_clues = ();
         my @guess = split //, $guess;

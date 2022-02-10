@@ -27,3 +27,22 @@ perl -e 'print "#"x78 . "\n";'
 perl -e 'print "#"x78 . "\n";'
 ./wordle_simulate.pl ELDER TEARS BOXER DRIER UNDER CIDER ELDER
 
+echo ""
+perl -e 'print "#"x78 . "\n";'
+perl -e 'print "#"x78 . "\n";'
+perl -e 'print "#"x78 . "\n";'
+./wordle_simulate.pl FRAME RATIO ALURE BRAVE DRAPE GRACE ERASE
+
+echo ""
+perl -e 'print "#"x78 . "\n";'
+perl -e 'print "#"x78 . "\n";'
+perl -e 'print "#"x78 . "\n";'
+./wordle_simulate.pl HUMOR AISLE COURT
+
+echo ""
+perl -e 'print "#"x78 . "\n";'
+perl -e 'print "#"x78 . "\n";'
+perl -e 'print "#"x78 . "\n";'
+./wordle_simulate.pl PAUSE AISLE STOAE CEASE PAUSE
+
+
