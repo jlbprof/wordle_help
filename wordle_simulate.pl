@@ -13,49 +13,49 @@ require './wordle_help.pl';
 $| = 1;
 
 $SIG{__WARN__} = sub {
-	my ($sig) = @_;
+    my ($sig) = @_;
 
-	print "WARN :$sig:\n";
+    print "WARN :$sig:\n";
 
-	print Carp->longmess . "\n";
+    print Carp->longmess . "\n";
 
-	exit 0;
+    exit 0;
 };
 
 $SIG{__DIE__} = sub {
-	my ($sig) = @_;
+    my ($sig) = @_;
 
-	print "DIE :$sig:\n";
-	print Carp->longmess . "\n";
+    print "DIE :$sig:\n";
+    print Carp->longmess . "\n";
 
-	exit 0;
+    exit 0;
 };
 
 $SIG{TERM} = sub {
-	my ($sig) = @_;
+    my ($sig) = @_;
 
-	exit 0;
+    exit 0;
 };
 
 $SIG{INT} = sub {
-	my ($sig) = @_;
+    my ($sig) = @_;
 
-	exit 0;
+    exit 0;
 };
 
 sub usage
 {
-	my ($msg) = @_;
+    my ($msg) = @_;
 
-	print "Error: $msg\n";
-	print "usage: wordle_simulate.pl solution first_guess\n";
+    print "Error: $msg\n";
+    print "usage: wordle_simulate.pl solution first_guess\n";
 
-	exit 0;
+    exit 0;
 }
 
 sub script
 {
-	my (@args) = @_;
+    my (@args) = @_;
 
     my $solution = splice @args, 0, 1;
 
@@ -124,7 +124,7 @@ sub script
         print "\n";
     }
 
-	return 1;
+    return 1;
 }
 
 script (@ARGV) unless caller ();

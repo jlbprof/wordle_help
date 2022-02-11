@@ -11,39 +11,39 @@ use Getopt::Long;
 $| = 1;
 
 $SIG{__WARN__} = sub {
-	my ($sig) = @_;
+    my ($sig) = @_;
 
-	print "WARN :$sig:\n";
+    print "WARN :$sig:\n";
 
-	print Carp->longmess . "\n";
+    print Carp->longmess . "\n";
 
-	exit 0;
+    exit 0;
 };
 
 $SIG{__DIE__} = sub {
-	my ($sig) = @_;
+    my ($sig) = @_;
 
-	print "DIE :$sig:\n";
-	print Carp->longmess . "\n";
+    print "DIE :$sig:\n";
+    print Carp->longmess . "\n";
 
-	exit 0;
+    exit 0;
 };
 
 $SIG{TERM} = sub {
-	my ($sig) = @_;
+    my ($sig) = @_;
 
-	exit 0;
+    exit 0;
 };
 
 $SIG{INT} = sub {
-	my ($sig) = @_;
+    my ($sig) = @_;
 
-	exit 0;
+    exit 0;
 };
 
 sub usage_help
 {
-	print "usage: wordle_help [clues]\n";
+    print "usage: wordle_help [clues]\n";
     print "   clues: AX3, character X is at position 3\n";
     print "          NX3, character X is present but NOT at position 3\n";
     print "          XX,  character X is NOT present\n";
@@ -54,12 +54,12 @@ sub usage_help
 
 sub usage
 {
-	my ($msg) = @_;
+    my ($msg) = @_;
 
-	print "Error: $msg\n";
+    print "Error: $msg\n";
     usage_help ();
 
-	exit 0;
+    exit 0;
 }
 
 sub validate_clue
@@ -234,7 +234,7 @@ sub get_possible_solutions
 
 sub script
 {
-	my (@clues) = @_;
+    my (@clues) = @_;
 
     my $show;
 
@@ -272,7 +272,7 @@ sub script
 
     print "Num remaining words $num\n";
 
-	return 1;
+    return 1;
 }
 
 script (@ARGV) unless caller ();

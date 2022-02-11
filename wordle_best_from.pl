@@ -12,39 +12,39 @@ require './wordle_opening_word.pl';
 $| = 1;
 
 $SIG{__WARN__} = sub {
-	my ($sig) = @_;
+    my ($sig) = @_;
 
-	print "WARN :$sig:\n";
+    print "WARN :$sig:\n";
 
-	print Carp->longmess . "\n";
+    print Carp->longmess . "\n";
 
-	exit 0;
+    exit 0;
 };
 
 $SIG{__DIE__} = sub {
-	my ($sig) = @_;
+    my ($sig) = @_;
 
-	print "DIE :$sig:\n";
-	print Carp->longmess . "\n";
+    print "DIE :$sig:\n";
+    print Carp->longmess . "\n";
 
-	exit 0;
+    exit 0;
 };
 
 $SIG{TERM} = sub {
-	my ($sig) = @_;
+    my ($sig) = @_;
 
-	exit 0;
+    exit 0;
 };
 
 $SIG{INT} = sub {
-	my ($sig) = @_;
+    my ($sig) = @_;
 
-	exit 0;
+    exit 0;
 };
 
 sub usage_help
 {
-	print "usage: wordle_best_from.pl clue1 .. clueN XXX rank1 .. rankN\n";
+    print "usage: wordle_best_from.pl clue1 .. clueN XXX rank1 .. rankN\n";
     print "       Select more strategic words from the resulting word list\n";
     print "   clues: AX3, character X is at position 3\n";
     print "          NX3, character X is present but NOT at position 3\n";
@@ -58,17 +58,17 @@ sub usage_help
 
 sub usage
 {
-	my ($msg) = @_;
+    my ($msg) = @_;
 
-	print "Error: $msg\n";
+    print "Error: $msg\n";
     usage_help ();
 
-	exit 0;
+    exit 0;
 }
 
 sub script
 {
-	my (@args) = @_;
+    my (@args) = @_;
 
     my $show;
 
@@ -104,7 +104,7 @@ sub script
     wordle::opening_word::set_ranks (@ranks);
     wordle::opening_word::process_ranks ();
 
-	return 0;
+    return 0;
 }
 
 script (@ARGV) unless caller ();
