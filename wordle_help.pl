@@ -255,9 +255,6 @@ sub script
 
     look_for_conflicting_clues (@clues);
 
-    my $word_file = 'words_alpha_5_letters.txt';
-    my @words;
-
     usage_help ();
     print "\n";
 

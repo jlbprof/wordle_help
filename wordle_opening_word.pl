@@ -209,34 +209,7 @@ sub script
         die "Cannot open $word_file";
     }
 
-    foreach my $word (@words) {
-        $words{$word} = 0;
-    }
-
-    foreach my $rank (@ranks) {
-        apply_rank ($rank);
-    }
-
-    my @list;
-    foreach my $word (keys %words) {
-        my $str = sprintf ("%03d%s", $words{$word}, $word); 
-        push (@list, $str);
-    }
-    my @sorted_list = reverse sort @list;
-
-    my $i = 0;
-    my $top_rank = int(substr ($sorted_list [$i], 0, 3));
-
-    while (1) {
-        my $str = $sorted_list[$i];
-        my $rank = substr($str, 0, 3);
-        my $word = substr($str, 3);
-
-        last if (int($rank) < $top_rank);
-
-        printf ("%4d %5s %3d\n", $i + 1, $word, $rank);
-        $i ++;
-    }
+    process_ranks ();
 
 	return 1;
 }
