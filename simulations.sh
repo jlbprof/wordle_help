@@ -45,4 +45,10 @@ perl -e 'print "#"x78 . "\n";'
 perl -e 'print "#"x78 . "\n";'
 ./wordle_simulate.pl PAUSE AISLE STOAE CEASE PAUSE
 
+echo ""
+perl -e 'print "#"x78 . "\n";'
+perl -e 'print "#"x78 . "\n";'
+perl -e 'print "#"x78 . "\n";'
+./wordle_simulate.pl ULCER AISLE TOWEL ULCER
+
 
